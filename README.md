@@ -53,22 +53,6 @@ Jdk 9 在接口中引入了私有方法和私有静态方法。
 
 StringBuilder 与 StringBuffer 的构造方法都是调用父类构造方法也就是AbstractStringBuilder 实现的。  
 
-AbstractStringBuilder.java
-
-abstract class AbstractStringBuilder implements Appendable, CharSequence {
-    /**
-     * The value is used for character storage.
-     */
-    char[] value;
-
-    /**
-     * The count is the number of characters used.
-     */
-    int count;
-
-    AbstractStringBuilder(int capacity) {
-        value = new char[capacity];
-    }}
 ### 线程安全性
 
 String 中的对象是不可变的，也就可以理解为常量，线程安全。AbstractStringBuilder 是 StringBuilder 与 StringBuffer 的公共父类，定义了一些字符串的基本操作，如 expandCapacity、append、insert、indexOf 等公共方法。StringBuffer 对方法加了同步锁或者对调用的方法加了同步锁，所以是线程安全的。StringBuilder 并没有对方法进行加同步锁，所以是非线程安全的。  
@@ -112,25 +96,25 @@ equals() : 它的作用也是判断两个对象是否相等。但它一般有两
 
 情况 1：类没有覆盖 equals() 方法。则通过 equals() 比较该类的两个对象时，等价于通过“==”比较这两个对象。  
 情况 2：类覆盖了 equals() 方法。一般，我们都覆盖 equals() 方法来比较两个对象的内容是否相等；若它们的内容相等，则返回 true (即，认为这两个对象相等)。  
-举个例子：
+举个例子：  
 
-public class test1 {
-    public static void main(String[] args) {
-        String a = new String("ab"); // a 为一个引用
-        String b = new String("ab"); // b为另一个引用,对象的内容一样
-        String aa = "ab"; // 放在常量池中
-        String bb = "ab"; // 从常量池中查找
-        if (aa == bb) // true
-            System.out.println("aa==bb");
-        if (a == b) // false，非同一对象
-            System.out.println("a==b");
-        if (a.equals(b)) // true
-            System.out.println("aEQb");
-        if (42 == 42.0) { // true
-            System.out.println("true");
-        }
-    }
-}
+public class test1 {  
+    public static void main(String[] args) {  
+        String a = new String("ab"); // a 为一个引用  
+        String b = new String("ab"); // b为另一个引用,对象的内容一样  
+        String aa = "ab"; // 放在常量池中  
+        String bb = "ab"; // 从常量池中查找  
+        if (aa == bb) // true  
+            System.out.println("aa==bb");  
+        if (a == b) // false，非同一对象  
+            System.out.println("a==b");  
+        if (a.equals(b)) // true  
+            System.out.println("aEQb");  
+        if (42 == 42.0) { // true  
+            System.out.println("true");  
+        }  
+    }  
+}  
 说明：  
 
 String 中的 equals 方法是被重写过的，因为 object 的 equals 方法是比较的对象的内存地址，而 String 的 equals 方法比较的是对象的值。  
