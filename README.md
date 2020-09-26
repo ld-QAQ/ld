@@ -153,11 +153,11 @@ System.out.println(str2==str3);//false
 第二种方式是直接在堆内存空间创建一个新的对象。
 记住一点：只要使用 new 方法，便需要创建新的对象。
 
-再给大家一个图应该更容易理解，图片来源：https://www.journaldev.com/797/what-is-java-string-pool：
+
 
 String-Pool-Java
 
-String 类型的常量池比较特殊。它的主要使用方法有两种：
+### String 类型的常量池比较特殊。它的主要使用方法有两种：
 
 直接使用双引号声明出来的 String 对象会直接存储在常量池中。
 如果不是用双引号声明的 String 对象，可以使用 String 提供的 intern 方法。String.intern() 是一个 Native 方法，它的作用是：如果运行时常量池中已经包含一个等于此 String 对象内容的字符串，则返回常量池中该字符串的引用；如果没有，JDK1.7之前（不包含1.7）的处理方式是在常量池中创建与此 String 内容相同的字符串，并返回常量池中创建的字符串的引用，JDK1.7以及之后的处理方式是在常量池中记录此字符串的引用，并返回该引用。
