@@ -4,3 +4,41 @@
 实际上Lambda的类型就是对应函数接口的类型。Lambda表达式另一个依据是类型推断机制，在上下文信息足够的情况下，  
 编译器可以推断出参数表的类型，而不需要显式指名。
 1.2lambda表达式本身就是函数接口的实现
+1.3
+Lambda表达式有如下约定：
+
+一个 Lambda 表达式可以有零个或多个参数；
+参数的类型既可以明确声明，也可以根据上下文来推断。例如：(int a)与(a)效果相同；
+所有参数需包含在圆括号内，参数之间用逗号相隔。例如：(a, b) 或 (int a, int b) 或 (String a, int b, float c)；
+空圆括号代表参数集为空。例如：() -> 42；
+当只有一个参数，且其类型可推导时，圆括号（）可省略。例如：a -> return a*a；
+Lambda 表达式的主体可包含零条或多条语句；
+如果 Lambda 表达式的主体只有一条语句，花括号{}可省略。匿名函数的返回类型与该主体表达式一致；
+如果 Lambda 表达式的主体包含一条以上语句，则表达式必须包含在花括号{}中（形成代码块）。匿名函数的返回类型与代码块的返回类型一致，若没有返回则为空。
+
+1.4举一个简单使用的例子,首先定义一个接口：
+
+Copy
+@FunctionalInterface
+public interface DoSomethingInterface<T> {
+
+    String doSomeThing(T t);
+
+}
+这个接口里面只能有一个函数，接口里是返回值为String类型的方法，那么下面使用它的时候就需要有返回值：
+
+Copy
+ class MainTest{
+
+     public static void main(String[] args) {
+
+         DoSomethingInterface<String> t = str -> {
+             return str;
+         };
+         String print = t.doSomeThing("print");
+         System.out.println(print);
+
+     }
+}
+t就相当于是接口的具体实现，那么使用 t.doSomeThing("print")就会去调用 t 的匿名函数执行。从这段代码看,如果我们有一个抽象类的具体实现逻辑相对简单不用大段代码的时候，可以使用 Lambda 表达式去实现具体的逻辑，这样就不用new 多个类。
+1.5
