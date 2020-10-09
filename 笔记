@@ -63,3 +63,103 @@ t就相当于是接口的具体实现，那么使用 t.doSomeThing("print")就�
 浅拷贝
 
 深拷贝
+
+public class CopyDemo{
+	
+	public static void main(String[] args){
+		
+		Teacher teacher = new Teacher();
+		teacher.setName("Tom");
+		teacher.setAge(25);
+		
+		Student student1 = new Student();
+		student1.setName("Bob");
+		student1.setAge(18);
+		
+		Student student2 = (Student)student1.clone();
+		System.out.println("have cloned");
+		System.out.println(student1);
+		System.out.println(student2);
+		System.out.println("changed");
+		student1.setAge(17);
+		student1.getTeacher.setAge(26);
+		System.out.println(student1);
+		System.out.println(student2);
+		
+	}
+}
+
+
+
+
+class Teacher implements Cloneable{
+	
+	private String name;
+	
+	private int age;
+	
+	public String getName(){
+		return name;
+	}
+	
+	public void setName(String name){
+		this.name = name;
+	}
+	
+	public int getAge(){
+		return age;
+	}
+	
+	public void setAge(int age){
+		this.age = age;
+	}
+	
+	public String toString(){
+		return "[teacherName = "+this.name + "teacherAge = "+ this.age+"]";
+	}
+}
+
+
+class Student implements Cloneable{
+	private Teacher teacher;
+	
+	private String name;
+	
+	private int age;
+	
+	public Teacher getTeacher(){
+		return teacher;
+	}
+	
+	public void setTeacher(Teacher teacher){
+		this.teacher = teacher;
+	}
+	
+	public String getName(){
+		return name;
+	}
+	
+	public void setName(String name){
+		this.name = name;
+	}
+	
+	public int getAge(){
+		return age;
+	}
+	
+	public void setAge(int age){
+		this.age = age;
+	}
+	
+	public String toString(){
+		return "[studentName = "+this.name + "studentAge = "+ this.age+"teacher = "+ this.teacher +"]";
+	}
+	
+	public Object clone(){
+		try{
+			return super.clone();
+		}catch(CloneNotSupportedException e){
+			return null;
+		}
+	}
+}
